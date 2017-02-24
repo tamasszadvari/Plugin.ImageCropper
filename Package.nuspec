@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Plugin.ImageCropper</id>
+    <version>1.0.0</version>
+    <authors>tamasszadvari</authors>
+    <owners>tamasszadvari</owners>
+    <licenseUrl>https://github.com/tamasszadvari/Plugin.ImageCropper/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/tamasszadvari/Plugin.ImageCropper</projectUrl>
+    <iconUrl>https://github.com/tamasszadvari/Plugin.ImageCropper/blob/master/crop.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Crop Photos Plugin for Xamarin.</description>
+    <copyright>Copyright 2017</copyright>
+    <tags>xamarin, forms, image, crop, xamarin.forms, plugin, plugin for xamarin, pcl</tags>
+    <dependencies>
+      <group targetFramework="MonoAndroid10">
+        <dependency id="Plugin.CurrentActivity" version="1.0.1" />
+        <dependency id="Xamarin.Android.Support.v4" version="[23.3.0]" />
+      </group>
+      <group targetFramework="Xamarin.iOS10">
+        <dependency id="Wapps.TOCrop" version="0.1.1" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <!--Core PCL-->
+    <file src="Plugin.ImageCropper/bin/Release/Plugin.ImageCropper.dll" target="lib/portable-net45+wp80+win8+wpa81/Plugin.ImageCropper.dll" />
+    <file src="Plugin.ImageCropper/bin/Release/Plugin.ImageCropper.xml" target="lib/portable-net45+wp80+win8+wpa81/Plugin.ImageCropper.xml" />
+    <file src="Plugin.ImageCropper.Abstractions/bin/Release/Plugin.ImageCropper.Abstractions.dll" target="lib/portable-net45+wp80+win8+wpa81/Plugin.ImageCropper.Abstractions.dll" />
+    <file src="Plugin.ImageCropper.Abstractions/bin/Release/Plugin.ImageCropper.Abstractions.xml" target="lib/portable-net45+wp80+win8+wpa81/Plugin.ImageCropper.Abstractions.xml" />
+    
+    <!--Xamarin.Android-->
+    <file src="Plugin.ImageCropper.Abstractions/bin/Release/Plugin.ImageCropper.Abstractions.dll" target="lib/MonoAndroid10/Plugin.ImageCropper.Abstractions.dll" />
+    <file src="Plugin.ImageCropper.Abstractions/bin/Release/Plugin.ImageCropper.Abstractions.xml" target="lib/MonoAndroid10/Plugin.ImageCropper.Abstractions.xml" />
+    <file src="Plugin.ImageCropper.Android/bin/Release/Plugin.ImageCropper.dll" target="lib/MonoAndroid10/Plugin.ImageCropper.dll" />
+    <file src="Plugin.ImageCropper.Android/bin/Release/Plugin.ImageCropper.dll" target="lib/MonoAndroid10/Plugin.ImageCropper.dll" />
+
+    <!--Xamarin.iOS-->
+    <file src="Plugin.ImageCropper.Abstractions/bin/Release/Plugin.ImageCropper.Abstractions.dll" target="lib/Xamarin.iOS10/Plugin.ImageCropper.Abstractions.dll" />
+    <file src="Plugin.ImageCropper.Abstractions/bin/Release/Plugin.ImageCropper.Abstractions.xml" target="lib/Xamarin.iOS10/Plugin.ImageCropper.Abstractions.xml" />
+    <file src="Plugin.ImageCropper.iOS/bin/Release/Plugin.ImageCropper.dll" target="lib/Xamarin.iOS10/Plugin.ImageCropper.dll" />
+    <file src="Plugin.ImageCropper.iOS/bin/Release/Plugin.ImageCropper.dll" target="lib/Xamarin.iOS10/Plugin.ImageCropper.dll" />
+  </files>
+</package>

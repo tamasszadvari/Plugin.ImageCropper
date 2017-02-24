@@ -1,0 +1,35 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.ImageCropper", "Plugin.ImageCropper\Plugin.ImageCropper.csproj", "{A8CA8466-438D-4697-BF49-F632E2F5161D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.ImageCropper.Abstractions", "Plugin.ImageCropper.Abstractions\Plugin.ImageCropper.Abstractions.csproj", "{688680F5-AF7A-4746-AFDC-B3EA2131B322}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.ImageCropper.iOS", "Plugin.ImageCropper.iOS\Plugin.ImageCropper.iOS.csproj", "{1E0B01B4-1174-43B5-A036-AF91B9E104F0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.ImageCropper.Android", "Plugin.ImageCropper.Android\Plugin.ImageCropper.Android.csproj", "{390F6D08-4142-4D48-BC60-29C889D75441}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A8CA8466-438D-4697-BF49-F632E2F5161D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8CA8466-438D-4697-BF49-F632E2F5161D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8CA8466-438D-4697-BF49-F632E2F5161D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8CA8466-438D-4697-BF49-F632E2F5161D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{688680F5-AF7A-4746-AFDC-B3EA2131B322}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{688680F5-AF7A-4746-AFDC-B3EA2131B322}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{688680F5-AF7A-4746-AFDC-B3EA2131B322}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{688680F5-AF7A-4746-AFDC-B3EA2131B322}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E0B01B4-1174-43B5-A036-AF91B9E104F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E0B01B4-1174-43B5-A036-AF91B9E104F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E0B01B4-1174-43B5-A036-AF91B9E104F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E0B01B4-1174-43B5-A036-AF91B9E104F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{390F6D08-4142-4D48-BC60-29C889D75441}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{390F6D08-4142-4D48-BC60-29C889D75441}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{390F6D08-4142-4D48-BC60-29C889D75441}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{390F6D08-4142-4D48-BC60-29C889D75441}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
