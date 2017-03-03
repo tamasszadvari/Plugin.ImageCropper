@@ -364,6 +364,7 @@ namespace Plugin.ImageCropper
 			var r = new RectF (_cropRect.Left, _cropRect.Top, _cropRect.Right, _cropRect.Bottom);
 
 			MatrixImage.MapRect (r);
+
 			return new Rect ((int)Math.Round (r.Left), (int)Math.Round (r.Top), (int)Math.Round (r.Right), (int)Math.Round (r.Bottom));
 		}
 		#endregion

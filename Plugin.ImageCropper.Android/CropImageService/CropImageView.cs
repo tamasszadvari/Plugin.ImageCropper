@@ -188,13 +188,11 @@ namespace Plugin.ImageCropper
 		// Pan the displayed image to make sure the cropping rectangle is visible.
 		private void EnsureVisible (HighlightView hv)
 		{
-			var r = hv.DrawRect;
+			var panDeltaX1 = Math.Max (0, IvLeft - hv.DrawRect.Left);
+			var panDeltaX2 = Math.Min (0, IvRight - hv.DrawRect.Right);
 
-			var panDeltaX1 = Math.Max (0, IvLeft - r.Left);
-			var panDeltaX2 = Math.Min (0, IvRight - r.Right);
-
-			var panDeltaY1 = Math.Max (0, IvTop - r.Top);
-			var panDeltaY2 = Math.Min (0, IvBottom - r.Bottom);
+			var panDeltaY1 = Math.Max (0, IvTop - hv.DrawRect.Top);
+			var panDeltaY2 = Math.Min (0, IvBottom - hv.DrawRect.Bottom);
 
 			var panDeltaX = panDeltaX1 != 0 ? panDeltaX1 : panDeltaX2;
 			var panDeltaY = panDeltaY1 != 0 ? panDeltaY1 : panDeltaY2;
@@ -209,10 +207,8 @@ namespace Plugin.ImageCropper
 		// view's center and scale according to the cropping rectangle.
 		private void CenterBasedOnHighlightView (HighlightView hv)
 		{
-			var drawRect = hv.DrawRect;
-
-			float width = drawRect.Width ();
-			float height = drawRect.Height ();
+			float width = hv.DrawRect.Width ();
+			float height = hv.DrawRect.Height ();
 
 			float thisWidth = Width;
 			float thisHeight = Height;
@@ -220,9 +216,7 @@ namespace Plugin.ImageCropper
 			var z1 = thisWidth / width * .6F;
 			var z2 = thisHeight / height * .6F;
 
-			var zoom = Math.Min (z1, z2);
-			zoom = zoom * GetScale ();
-			zoom = Math.Max (1F, zoom);
+			var zoom = Math.Max (1F, ((Math.Min (z1, z2)) * GetScale ()));
 			if ((Math.Abs (zoom - GetScale ()) / zoom) > .1)
 			{
 				float[] coordinates = { hv.CropRect.CenterX(), hv.CropRect.CenterY() };

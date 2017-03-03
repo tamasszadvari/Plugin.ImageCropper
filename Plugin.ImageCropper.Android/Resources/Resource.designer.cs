@@ -106,8 +106,32 @@ namespace Plugin.ImageCropper
 		public partial class String
 		{
 			
+			// aapt resource value: 0x7f040003
+			public static int discard = 2130968579;
+			
 			// aapt resource value: 0x7f040000
 			public static int library_name = 2130968576;
+			
+			// aapt resource value: 0x7f040008
+			public static int noStorageCard = 2130968584;
+			
+			// aapt resource value: 0x7f040006
+			public static int notEnoughSpace = 2130968582;
+			
+			// aapt resource value: 0x7f040007
+			public static int preparingCard = 2130968583;
+			
+			// aapt resource value: 0x7f040001
+			public static int rotateLeft = 2130968577;
+			
+			// aapt resource value: 0x7f040002
+			public static int rotateRight = 2130968578;
+			
+			// aapt resource value: 0x7f040004
+			public static int save = 2130968580;
+			
+			// aapt resource value: 0x7f040005
+			public static int savingImage = 2130968581;
 			
 			static String()
 			{

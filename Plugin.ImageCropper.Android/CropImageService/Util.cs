@@ -7,31 +7,36 @@ namespace Plugin.ImageCropper
 	{
 		// Rotates the bitmap by the specified degree.
 		// If a new bitmap is created, the original bitmap is recycled.
-		public static Bitmap RotateImage (Bitmap b, int degrees)
+		public static void RotateImage (this Bitmap bitmap, int degrees)
 		{
-			if (degrees != 0 && b != null)
+			if (degrees != 0 && bitmap != null)
 			{
 				var m = new Matrix ();
-				m.SetRotate (degrees, (float)b.Width / 2, (float)b.Height / 2);
+				m.SetRotate (degrees, (float)bitmap.Width / 2, (float)bitmap.Height / 2);
+
+				Bitmap b2 = null;
 
 				try {
-					var b2 = Bitmap.CreateBitmap (b, 0, 0, b.Width, b.Height, m, true);
-					if (b != b2)
+					b2 = Bitmap.CreateBitmap (bitmap, 0, 0, bitmap.Width, bitmap.Height, m, true);
+					if (bitmap != b2)
 					{
-						b.Recycle ();
-						b = b2;
+						bitmap.Recycle ();
+
+						bitmap = b2;
 					}
 				}
 				catch (Java.Lang.OutOfMemoryError)
 				{
 					// We have no memory to rotate. Return the original bitmap.
+					if (b2 != null)
+					{
+						b2.Recycle ();
+					}
 				}
 			}
-
-			return b;
 		}
 
-		public static Bitmap Transform (Matrix scaler, Bitmap source, int targetWidth, int targetHeight, bool scaleUp)
+		public static void Transform (this Bitmap source, Matrix scaler, int targetWidth, int targetHeight, bool scaleUp)
 		{
 			var deltaX = source.Width - targetWidth;
 			var deltaY = source.Height - targetHeight;
@@ -59,7 +64,7 @@ namespace Plugin.ImageCropper
 
 				c.DrawBitmap (source, src, dst, null);
 
-				return b2;
+				source = b2;
 			}
 
 			float bitmapWidthF = source.Width;
@@ -68,29 +73,17 @@ namespace Plugin.ImageCropper
 			var bitmapAspect = bitmapWidthF / bitmapHeightF;
 			var viewAspect = (float)targetWidth / targetHeight;
 
-			if (bitmapAspect > viewAspect)
+			var scale = (bitmapAspect > viewAspect)
+				? targetHeight / bitmapHeightF
+				: targetWidth / bitmapWidthF;
+
+			if (scale < .9F || scale > 1F)
 			{
-				var scale = targetHeight / bitmapHeightF;
-				if (scale < .9F || scale > 1F)
-				{
-					scaler.SetScale (scale, scale);
-				}
-				else
-				{
-					scaler = null;
-				}
+				scaler.SetScale (scale, scale);
 			}
 			else
 			{
-				var scale = targetWidth / bitmapWidthF;
-				if (scale < .9F || scale > 1F)
-				{
-					scaler.SetScale (scale, scale);
-				}
-				else
-				{
-					scaler = null;
-				}
+				scaler = null;
 			}
 
 			Bitmap b1 = (scaler != null) 
@@ -107,7 +100,7 @@ namespace Plugin.ImageCropper
 				b1.Recycle ();
 			}
 
-			return b3;
+			source = b3;
 		}
 	}
 }

@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+	<string name="library_name">Plugin.ImageCropper.Android</string>
+	<string name="rotateLeft">Balra</string>
+	<string name="rotateRight">Jobbra</string>
+	<string name="discard">Elvet</string>
+	<string name="save">Mentés</string>
+
+	<string name="savingImage">Kép mentése</string>
+	<string name="notEnoughSpace">Nincs elég hely</string>
+	<string name="preparingCard">Hely előkészítése</string>
+	<string name="noStorageCard">Nincs memória kártya</string>
+</resources>

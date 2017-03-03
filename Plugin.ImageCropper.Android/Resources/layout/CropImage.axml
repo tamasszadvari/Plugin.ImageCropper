@@ -26,25 +26,25 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:text="Save" />
+                android:text="@string/save" />
             <Button
                 android:id="@+id/discard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/save"
-                android:text="Discard" />
+                android:text="@string/discard" />
             <Button
                 android:id="@+id/rotateLeft"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/discard"
-                android:text="Left" />
+                android:text="@string/rotateLeft" />
             <Button
                 android:id="@+id/rotateRight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/rotateLeft"
-                android:text="Right" />
+                android:text="@string/rotateRight" />
         </RelativeLayout>
     </RelativeLayout>
 </FrameLayout>

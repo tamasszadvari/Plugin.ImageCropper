@@ -97,20 +97,10 @@ namespace Plugin.ImageCropper
 
 			Window.AddFlags (WindowManagerFlags.Fullscreen);
 
-			FindViewById<Button> (Resource.Id.discard).Click += (sender, e) => { OnDiscardClick (); };
-			FindViewById<Button> (Resource.Id.save).Click += (sender, e) => { OnSaveClicked (); };
-			FindViewById<Button> (Resource.Id.rotateLeft).Click += (o, e) => {
-				_bitmap = Util.RotateImage (_bitmap, -90);
-				var rotateBitmap = new RotateBitmap (_bitmap);
-				_imageView.SetImageRotateBitmapResetBase (rotateBitmap, true);
-				AddHighlightView ();
-			};
-			FindViewById<Button> (Resource.Id.rotateRight).Click += (o, e) => {
-				_bitmap = Util.RotateImage (_bitmap, 90);
-				var rotateBitmap = new RotateBitmap (_bitmap);
-				_imageView.SetImageRotateBitmapResetBase (rotateBitmap, true);
-				AddHighlightView ();
-			};
+			FindViewById<Button> (Resource.Id.discard).Click += (sender, e) => OnDiscardClick ();
+			FindViewById<Button> (Resource.Id.save).Click += (sender, e) => OnSaveClicked ();
+			FindViewById<Button> (Resource.Id.rotateLeft).Click += (o, e) => OnRotateClicked (-90);
+			FindViewById<Button> (Resource.Id.rotateRight).Click += (o, e) => OnRotateClicked (90);
 
 			_imageView.SetImageBitmapResetBase (_bitmap, true);
 			AddHighlightView ();
@@ -120,7 +110,7 @@ namespace Plugin.ImageCropper
 		{
 			base.OnDestroy ();
 
-			if (_bitmap != null && _bitmap.IsRecycled)
+			if (_bitmap != null && !_bitmap.IsRecycled)
 			{
 				_bitmap.Recycle ();
 			}
@@ -128,6 +118,14 @@ namespace Plugin.ImageCropper
 		#endregion
 
 		#region Private helpers
+		private void OnRotateClicked (int degree)
+		{
+			_bitmap.RotateImage (degree);
+			var rotateBitmap = new RotateBitmap (_bitmap);
+			_imageView.SetImageRotateBitmapResetBase (rotateBitmap, true);
+			AddHighlightView ();
+		}
+
 		private void AddHighlightView ()
 		{
 			Crop = new HighlightView (_imageView);
@@ -159,9 +157,9 @@ namespace Plugin.ImageCropper
 			_imageView.AddHighlightView (Crop);
 		}
 
-		private static global::Android.Net.Uri GetImageUri (string path)
+		private static Android.Net.Uri GetImageUri (string path)
 		{
-			return global::Android.Net.Uri.FromFile (new Java.IO.File (path));
+			return Android.Net.Uri.FromFile (new Java.IO.File (path));
 		}
 
 		private Bitmap GetBitmap (string path)
@@ -175,8 +173,10 @@ namespace Plugin.ImageCropper
 				// Decode image size
 				var o = new BitmapFactory.Options { InJustDecodeBounds = true };
 
-				BitmapFactory.DecodeStream (ins, null, o);
+				var temp = BitmapFactory.DecodeStream (ins, null, o);
 				ins.Close ();
+
+				temp.Recycle ();
 
 				var scale = 1;
 				if (o.OutHeight > imageMaxSize || o.OutWidth > imageMaxSize)
@@ -209,16 +209,14 @@ namespace Plugin.ImageCropper
 
 			Saving = true;
 
-			var r = Crop.CropRect;
-
-			var width = r.Width ();
-			var height = r.Height ();
+			var width = Crop.CropRect.Width ();
+			var height = Crop.CropRect.Height ();
 
 			var croppedImage = Bitmap.CreateBitmap (width, height, Bitmap.Config.Rgb565);
 			{
 				var canvas = new Canvas (croppedImage);
 				var dstRect = new Rect (0, 0, width, height);
-				canvas.DrawBitmap (_bitmap, r, dstRect, null);
+				canvas.DrawBitmap (_bitmap, Crop.CropRect, dstRect, null);
 			}
 
 			// If the output is required to a specific size then scale or fill
@@ -227,18 +225,13 @@ namespace Plugin.ImageCropper
 				if (_scale)
 				{
 					// Scale the image to the required dimensions
-					var old = croppedImage;
-					croppedImage = Util.Transform (new Matrix (), croppedImage, _outputX, _outputY, _scaleUp);
-					if (old != croppedImage)
-					{
-						old.Recycle ();
-					}
+					croppedImage.Transform (new Matrix (), _outputX, _outputY, _scaleUp);
 				}
 				else
 				{
 					// Don't scale the image crop it to the size requested.
 					// Create an new image with the cropped image in the center and
-					// the extra space filled.              
+					// the extra space filled.    
 					var b = Bitmap.CreateBitmap (_outputX, _outputY, Bitmap.Config.Rgb565);
 					var canvas = new Canvas (b);
 
@@ -274,8 +267,7 @@ namespace Plugin.ImageCropper
 			}
 			else
 			{
-				var b = croppedImage;
-				BackgroundJob.StartBackgroundJob (this, null, "Saving image", () => SaveOutput (b), _mHandler);
+				BackgroundJob.StartBackgroundJob (this, null, Resources.GetString(Resource.String.savingImage), () => SaveOutput (croppedImage), _mHandler);
 			}
 
 			//raise event
@@ -332,12 +324,13 @@ namespace Plugin.ImageCropper
 
 			if (remaining == NoStorageError)
 			{
-				var state = global::Android.OS.Environment.ExternalStorageState;
-				noStorageText = (state == global::Android.OS.Environment.MediaChecking) ? "Preparing card" : "No storage card";
+				noStorageText = (Android.OS.Environment.ExternalStorageState == Android.OS.Environment.MediaChecking) 
+					? activity.Resources.GetString(Resource.String.preparingCard)
+					: activity.Resources.GetString (Resource.String.noStorageCard);
 			}
 			else if (remaining < 1)
 			{
-				noStorageText = "Not enough space";
+				noStorageText = activity.Resources.GetString (Resource.String.notEnoughSpace);
 			}
 
 			if (noStorageText != null)
@@ -349,7 +342,7 @@ namespace Plugin.ImageCropper
 		private static int CalculatePicturesRemaining ()
 		{
 			try {
-				var storageDirectory = global::Android.OS.Environment.GetExternalStoragePublicDirectory (global::Android.OS.Environment.DirectoryPictures).ToString ();
+				var storageDirectory = Android.OS.Environment.GetExternalStoragePublicDirectory (Android.OS.Environment.DirectoryPictures).ToString ();
 				var stat = new StatFs (storageDirectory);
 				var remaining = stat.AvailableBlocksLong * (float)stat.BlockSizeLong / 400000F;
 

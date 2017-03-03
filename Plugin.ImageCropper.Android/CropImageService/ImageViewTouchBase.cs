@@ -64,13 +64,12 @@ namespace Plugin.ImageCropper
 			SetScaleType (ImageView.ScaleType.Matrix);
 		}
 
-		private void setImageBitmap (Bitmap bitmap, int rotation)
+		private void SetImageBitmap (Bitmap bitmap, int rotation)
 		{
 			base.SetImageBitmap (bitmap);
-			var d = Drawable;
-			d?.SetDither (true);
 
-			Bitmap old = bitmapDisplayed.Bitmap;
+			Drawable?.SetDither (true);
+
 			bitmapDisplayed.Bitmap = bitmap;
 			bitmapDisplayed.Rotation = rotation;
 		}
@@ -93,21 +92,16 @@ namespace Plugin.ImageCropper
 
 		public void SetImageRotateBitmapResetBase (RotateBitmap bitmap, bool resetSupp)
 		{
-			int viewWidth = Width;
-
-			if (viewWidth <= 0)
+			if (Width <= 0)
 			{
-				onLayoutRunnable = () => {
-					SetImageRotateBitmapResetBase (bitmap, resetSupp);
-				};
-
+				onLayoutRunnable = () => SetImageRotateBitmapResetBase (bitmap, resetSupp);
 				return;
 			}
 
 			if (bitmap.Bitmap != null)
 			{
 				GetProperBaseMatrix (bitmap, baseMatrix);
-				setImageBitmap (bitmap.Bitmap, bitmap.Rotation);
+				SetImageBitmap (bitmap.Bitmap, bitmap.Rotation);
 			}
 			else
 			{
@@ -137,7 +131,6 @@ namespace Plugin.ImageCropper
 			thisHeight = bottom - top;
 
 			var r = onLayoutRunnable;
-
 			if (r != null)
 			{
 				onLayoutRunnable = null;
@@ -166,7 +159,7 @@ namespace Plugin.ImageCropper
 
 		public override void SetImageBitmap (Bitmap bm)
 		{
-			setImageBitmap (bm, 0);
+			SetImageBitmap (bm, 0);
 		}
 		#endregion
 
@@ -251,9 +244,9 @@ namespace Plugin.ImageCropper
 
 			float fw = (float)bitmapDisplayed.Width / thisWidth;
 			float fh = (float)bitmapDisplayed.Height / thisHeight;
-			float max = Math.Max (fw, fh) * 4;
 
-			return max;
+			return (Math.Max (fw, fh) * 4);
+
 		}
 
 		protected virtual void ZoomTo (float scale, float centerX, float centerY)
@@ -279,7 +272,6 @@ namespace Plugin.ImageCropper
 			long startTime = System.Environment.TickCount;
 
 			Action anim = null;
-
 			anim = () => {
 				long now = System.Environment.TickCount;
 				float currentMs = Math.Min (durationMs, now - startTime);
@@ -386,10 +378,9 @@ namespace Plugin.ImageCropper
 				return;
 			}
 
-			Matrix m = GetImageViewMatrix ();
-
 			var rect = new RectF (0, 0, bitmapDisplayed.Bitmap.Width, bitmapDisplayed.Bitmap.Height);
 
+			Matrix m = GetImageViewMatrix ();
 			m.MapRect (rect);
 
 			float height = rect.Height ();

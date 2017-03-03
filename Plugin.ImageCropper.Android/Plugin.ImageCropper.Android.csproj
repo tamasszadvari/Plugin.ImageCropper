@@ -84,12 +84,16 @@
     <AndroidResource Include="Resources\drawable\indicator_autocrop.png">
       <IncludeInPackage>true</IncludeInPackage>
     </AndroidResource>
+    <AndroidResource Include="Resources\values-hu\Strings.xml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Plugin.ImageCropper.Abstractions\Plugin.ImageCropper.Abstractions.csproj">
       <Project>{688680F5-AF7A-4746-AFDC-B3EA2131B322}</Project>
       <Name>Plugin.ImageCropper.Abstractions</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\values-hu\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

@@ -1,4 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="library_name">Plugin.ImageCropper.Android</string>
+	<string name="rotateLeft">Left</string>
+	<string name="rotateRight">Right</string>
+	<string name="discard">Discard</string>
+	<string name="save">Save</string>
+
+	<string name="savingImage">Saving image</string>
+	<string name="notEnoughSpace">Not enough space</string>
+	<string name="preparingCard">Preparing card</string>
+	<string name="noStorageCard">No storage card</string>
 </resources>
