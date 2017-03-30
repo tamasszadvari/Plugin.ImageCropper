@@ -31,7 +31,7 @@ namespace Plugin.ImageCropper
 
 		internal static Exception NotImplementedInReferenceAssembly ()
 		{
-			return new NotImplementedException ("This functionality is not implemented in the portable version of this assembly.  You should reference the Xam.Plugins.ImageCropper NuGet package from your main application project in order to reference the platform-specific implementation.");
+			return new NotImplementedException ("This functionality is not implemented in the portable version of this assembly.  You should reference the Plugin.ImageCropper NuGet package from your main application project in order to reference the platform-specific implementation.");
 		}
 	}
 }

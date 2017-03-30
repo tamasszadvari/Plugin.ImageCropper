@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Plugin.ImageCropper</id>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <authors>tamasszadvari</authors>
     <owners>tamasszadvari</owners>
     <licenseUrl>https://github.com/tamasszadvari/Plugin.ImageCropper/blob/master/LICENSE</licenseUrl>
@@ -15,7 +15,7 @@
     <dependencies>
       <group targetFramework="MonoAndroid10">
         <dependency id="Plugin.CurrentActivity" version="1.0.1" />
-        <dependency id="Xamarin.Android.Support.v4" version="[23.3.0]" />
+        <dependency id="Xamarin.Android.Support.v4" version="23.3.0" />
       </group>
       <group targetFramework="Xamarin.iOS10">
         <dependency id="Wapps.TOCrop" version="0.1.1" />

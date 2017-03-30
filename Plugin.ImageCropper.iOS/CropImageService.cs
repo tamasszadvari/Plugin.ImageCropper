@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 using CoreGraphics;
+using Plugin.ImageCropper.Abstractions;
 using UIKit;
 using Wapps.TOCrop;
-using Plugin.ImageCropper.Abstractions;
 
 namespace Plugin.ImageCropper
 {

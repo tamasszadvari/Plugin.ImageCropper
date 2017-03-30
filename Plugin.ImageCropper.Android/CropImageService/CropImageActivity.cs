@@ -115,6 +115,17 @@ namespace Plugin.ImageCropper
 				_bitmap.Recycle ();
 			}
 		}
+
+		public override void OnBackPressed ()
+		{
+			base.OnBackPressed ();
+
+			SetResult (Result.Canceled);
+			Finish ();
+
+			//raise event
+			MediaCroped?.Invoke (this, new XViewEventArgs (nameof (MediaCroped), null));
+		}
 		#endregion
 
 		#region Private helpers
@@ -164,29 +175,27 @@ namespace Plugin.ImageCropper
 
 		private Bitmap GetBitmap (string path)
 		{
-			var uri = GetImageUri (path);
-
 			try {
+				var uri = GetImageUri (path);
 				const int imageMaxSize = 1024;
 				var ins = ContentResolver.OpenInputStream (uri);
 
 				// Decode image size
 				var o = new BitmapFactory.Options { InJustDecodeBounds = true };
 
-				var temp = BitmapFactory.DecodeStream (ins, null, o);
-				ins.Close ();
-
-				temp.Recycle ();
-
-				var scale = 1;
-				if (o.OutHeight > imageMaxSize || o.OutWidth > imageMaxSize)
+				using (var temp = BitmapFactory.DecodeStream (ins, null, o))
 				{
-					scale = (int)Math.Pow (2, (int)Math.Round (Math.Log (imageMaxSize / (double)Math.Max (o.OutHeight, o.OutWidth)) / Math.Log (0.5)));
+					ins.Close ();
 				}
 
-				var o2 = new BitmapFactory.Options { InSampleSize = scale };
+				var scale = (o.OutHeight > imageMaxSize || o.OutWidth > imageMaxSize)
+					? Math.Pow (2, Math.Round (Math.Log (imageMaxSize / (double)Math.Max (o.OutHeight, o.OutWidth)) / Math.Log (0.5)))
+					: 1;
+				var o2 = new BitmapFactory.Options { InSampleSize = (int)scale };
+
 				ins = ContentResolver.OpenInputStream (uri);
 				var b = BitmapFactory.DecodeStream (ins, null, o2);
+
 				ins.Close ();
 
 				return b;
@@ -298,7 +307,7 @@ namespace Plugin.ImageCropper
 				}
 				catch (Exception ex)
 				{
-					Log.Error (GetType ().Name, ex.Message);
+					Log.Error (GetType ().Name, ex.Message + "\n" + ex.StackTrace);
 				}
 
 				var extras = new Bundle ();
