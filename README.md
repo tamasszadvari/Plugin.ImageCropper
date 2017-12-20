@@ -1,7 +1,7 @@
 # Plugin.ImageCropper
 Crop Photos Plugin for Xamarin.
 
-I'm not maintaining this project, so I would aprreciate any help and pull request.
+_I'm not maintaining this project, so I would appreciate any help and pull request._
 
 ## Support Platforms
 * iOS 8+
